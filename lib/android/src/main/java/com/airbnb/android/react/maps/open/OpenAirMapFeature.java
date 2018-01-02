@@ -3,6 +3,8 @@ package com.airbnb.android.react.maps.open;
 import android.content.Context;
 
 import com.facebook.react.views.view.ReactViewGroup;
+
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.views.MapView;
 
 public abstract class OpenAirMapFeature extends ReactViewGroup {
@@ -10,7 +12,7 @@ public abstract class OpenAirMapFeature extends ReactViewGroup {
     super(context);
   }
 
-  public abstract void addToMap(MapView map);
+  public abstract void addToMap(OpenStreetMapTileProviderConstants map);
 
   public abstract void removeFromMap(MapView map);
 

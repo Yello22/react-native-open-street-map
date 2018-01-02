@@ -1,4 +1,4 @@
-package com.airbnb.android.react.maps;
+package com.airbnb.android.react.maps.open;
 
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;

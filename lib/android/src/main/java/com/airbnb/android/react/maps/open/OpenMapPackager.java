@@ -2,7 +2,6 @@ package com.airbnb.android.react.maps.open;
 
 import android.app.Activity;
 
-import com.airbnb.android.react.maps.AirMapModule;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -22,7 +21,7 @@ public class OpenMapPackager  implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(new AirMapModule(reactContext));
+        return Arrays.<NativeModule>asList(new OpenAirMapModule(reactContext));
     }
 
     // Deprecated RN 0.47

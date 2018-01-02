@@ -1,4 +1,4 @@
-package com.airbnb.android.react.maps;
+package com.airbnb.android.react.maps.open;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;

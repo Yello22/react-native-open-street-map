@@ -2,7 +2,6 @@ package com.airbnb.android.react.maps.open;
 
 import android.view.View;
 
-import com.airbnb.android.react.maps.SizeReportingShadowNode;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
@@ -15,12 +14,10 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.google.android.gms.maps.model.MapStyleOptions;
 
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.MapEventsOverlay;
 
 import java.util.Map;
 
@@ -127,12 +124,12 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "showsMyLocationButton", defaultBoolean = true)
     public void setShowsMyLocationButton(OpenAirMapView view, boolean showMyLocationButton) {
-        view.setShowsMyLocationButton(showMyLocationButton);
+        view.setVerticalScrollBarEnabled(showMyLocationButton);
     }
 
     @ReactProp(name = "toolbarEnabled", defaultBoolean = true)
     public void setToolbarEnabled(OpenAirMapView view, boolean toolbarEnabled) {
-        view.setToolbarEnabled(toolbarEnabled);
+        view.setFlingEnabled(toolbarEnabled);
     }
 
     // This is a private prop to improve performance of panDrag by disabling it when the callback
@@ -253,8 +250,8 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
                 GeoPoint southwest = new GeoPoint(lat + latDelta / 2, lng + lngDelta / 2);
                 GeoPoint northeast = new GeoPoint(lat + latDelta / 2, lng + lngDelta / 2);
-                Bounds bounds = new Bounds(southwest, northeast);
-                view.animateToRegion(bounds, duration);
+                GeoPoint point = new GeoPoint(lat, lng);
+                view.animateToRegion(point, duration);
                 break;
 
             case ANIMATE_TO_COORDINATE:
@@ -262,35 +259,36 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
                 duration = args.getInt(1);
                 lng = region.getDouble("longitude");
                 lat = region.getDouble("latitude");
-                view.animateToCoordinate(new Bounds(lat, lng), duration);
+                GeoPoint pointCord = new GeoPoint(lat, lng);
+                view.animateToCoordinate(pointCord, duration);
                 break;
 
             case ANIMATE_TO_VIEWING_ANGLE:
                 angle = (float)args.getDouble(0);
                 duration = args.getInt(1);
-                view.animateToViewingAngle(angle, duration);
+//                view.animateToViewingAngle(angle, duration);
                 break;
 
             case ANIMATE_TO_BEARING:
                 bearing = (float)args.getDouble(0);
                 duration = args.getInt(1);
-                view.animateToBearing(bearing, duration);
+//                view.animateToBearing(bearing, duration);
                 break;
 
             case FIT_TO_ELEMENTS:
-                view.fitToElements(args.getBoolean(0));
+//                view.fitToElements(args.getBoolean(0));
                 break;
 
             case FIT_TO_SUPPLIED_MARKERS:
-                view.fitToSuppliedMarkers(args.getArray(0), args.getBoolean(1));
+//                view.fitToSuppliedMarkers(args.getArray(0), args.getBoolean(1));
                 break;
 
             case FIT_TO_COORDINATES:
-                view.fitToCoordinates(args.getArray(0), args.getMap(1), args.getBoolean(2));
+//                view.fitToCoordinates(args.getArray(0), args.getMap(1), args.getBoolean(2));
                 break;
 
             case SET_MAP_BOUNDARIES:
-                view.setMapBoundaries(args.getMap(0), args.getMap(1));
+//                view.setMapBoundaries(args.getMap(0), args.getMap(1));
                 break;
         }
     }
@@ -347,7 +345,7 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @Override
     public void addView(OpenAirMapView parent, View child, int index) {
-        parent.addFeature(child, index);
+//        parent.addFeature(child, index);
     }
 
     @Override
@@ -367,7 +365,7 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @Override
     public void updateExtraData(OpenAirMapView view, Object extraData) {
-        view.updateExtraData(extraData);
+//        view.updateExtraData(extraData);
     }
 
     void pushEvent(ThemedReactContext context, View view, String name, WritableMap data) {

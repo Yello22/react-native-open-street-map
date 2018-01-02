@@ -2,6 +2,11 @@ package com.airbnb.android.react.maps;
 
 import android.app.Activity;
 
+import com.airbnb.android.react.maps.open.OpenAirMapManager;
+import com.airbnb.android.react.maps.open.OpenAirMapModule;
+import com.airbnb.android.react.maps.open.collout.OpenAirMapCalloutManager;
+import com.airbnb.android.react.maps.open.marker.OpenAirMapMarkerManager;
+import com.airbnb.android.react.maps.open.polyline.OpenAirMapPolylineManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -21,7 +26,7 @@ public class MapsPackage implements ReactPackage {
 
   @Override
   public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-    return Arrays.<NativeModule>asList(new AirMapModule(reactContext));
+    return Arrays.<NativeModule>asList(new OpenAirMapModule(reactContext));
   }
 
   // Deprecated RN 0.47
@@ -31,25 +36,15 @@ public class MapsPackage implements ReactPackage {
 
   @Override
   public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-    AirMapCalloutManager calloutManager = new AirMapCalloutManager();
-    AirMapMarkerManager annotationManager = new AirMapMarkerManager();
-    AirMapPolylineManager polylineManager = new AirMapPolylineManager(reactContext);
-    AirMapPolygonManager polygonManager = new AirMapPolygonManager(reactContext);
-    AirMapCircleManager circleManager = new AirMapCircleManager(reactContext);
-    AirMapManager mapManager = new AirMapManager(reactContext);
-    AirMapLiteManager mapLiteManager = new AirMapLiteManager(reactContext);
-    AirMapUrlTileManager urlTileManager = new AirMapUrlTileManager(reactContext);
-    AirMapLocalTileManager localTileManager = new AirMapLocalTileManager(reactContext);
+    OpenAirMapCalloutManager calloutManager = new OpenAirMapCalloutManager();
+    OpenAirMapMarkerManager annotationManager = new OpenAirMapMarkerManager();
+    OpenAirMapPolylineManager polylineManager = new OpenAirMapPolylineManager(reactContext);
+    OpenAirMapManager mapManager = new OpenAirMapManager(reactContext);
 
     return Arrays.<ViewManager>asList(
         calloutManager,
         annotationManager,
         polylineManager,
-        polygonManager,
-        circleManager,
-        mapManager,
-        mapLiteManager,
-        urlTileManager,
-        localTileManager);
+        mapManager);
   }
 }
