@@ -15,6 +15,7 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
+import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -82,14 +83,24 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         view.map.setTileSource(titleMap);
     }
 
-//    No customMapStyle
-//    @ReactProp(name = "customMapStyleString")
-//    public void setMapStyle(OpenAirMapView view, @Nullable String customMapStyleString) {
-//        view.map(new MapStyleOptions(customMapStyleString));
-//    }
+    @ReactProp(name = "zoom")
+    public void setZoom(OpenAirMapView view, @Nullable int zoom) {
+        IMapController mapController = view.getController();
+        mapController.setZoom(zoom);
+    }
 
+    @ReactProp(name = "controllerZom", defaultBoolean = false)
+    public void controllerZom(OpenAirMapView view, boolean isZoomControl) {
+        view.setBuiltInZoomControls(isZoomControl);
+    };
+
+    @ReactProp(name = "multiTouchControls", defaultBoolean = false)
+    public void setMultiTouchControls(OpenAirMapView view, boolean isMultiTouch) {
+        view.setMultiTouchControls(isMultiTouch);
+    }
+    
     @ReactProp(name = "mapPadding")
-    public void setMapPadding(OpenAirMapView view, @Nullable ReadableMap padding) {
+    public void setMapPadding(OpenAirMapView view, ReadableMap padding) {
         int left = 0;
         int top = 0;
         int right = 0;
@@ -183,7 +194,7 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "rotateEnabled", defaultBoolean = false)
     public void setRotateEnabled(OpenAirMapView view, boolean rotateEnabled) {
-        view.map.setMotionEventSplittingEnabled(rotateEnabled);
+        view.map.setMultiTouchControls(rotateEnabled);
     }
 
     @ReactProp(name = "cacheEnabled", defaultBoolean = false)
@@ -211,7 +222,7 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         view.setLoadingIndicatorColor(loadingIndicatorColor);
     }
 
-//    @ReactProp(name = "pitchEnabled", defaultBoolean = false)
+    //    @ReactProp(name = "pitchEnabled", defaultBoolean = false)
 //    public void setPitchEnabled(OpenAirMapView view, boolean pitchEnabled) {
 //        view.map.getUiSettings().setTiltGesturesEnabled(pitchEnabled);
 //    }

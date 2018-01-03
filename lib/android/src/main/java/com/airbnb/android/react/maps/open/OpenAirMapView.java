@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.facebook.react.uimanager.events.EventDispatcher;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 
 import java.util.ArrayList;
@@ -38,12 +40,12 @@ import java.util.Map;
 
 import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
-public class OpenAirMapView extends MapView {
+public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListener, MapView.OnFirstLayoutListener {
     public MapView map;
     private ProgressBar mapLoadingProgressBar;
     private RelativeLayout mapLoadingLayout;
     private ImageView cacheImageView;
-    private Boolean isMapLoaded = false;
+    private Boolean isMapLoaded = true;
     private Integer loadingBackgroundColor = null;
     private Integer loadingIndicatorColor = null;
     private final int baseMapPadding = 50;
@@ -107,12 +109,7 @@ public class OpenAirMapView extends MapView {
         this.manager = manager;
         this.context = reactContext;
 
-//        super.onCreate(null);
-        // TODO(lmr): what about onStart????
-//        super.onResume();
-//        super.getMapAsync(this);
-
-    final OpenAirMapView view = this;
+        final OpenAirMapView view = this;
 
         gestureDetector = new GestureDetectorCompat(reactContext, new GestureDetector.SimpleOnGestureListener() {
         @Override
@@ -131,7 +128,7 @@ public class OpenAirMapView extends MapView {
 @Override public void onLayoutChange(View v, int left, int top, int right, int bottom,
         int oldLeft, int oldTop, int oldRight, int oldBottom) {
             if (!paused) {
-//                OpenAirMapView.this.cacheView();
+                OpenAirMapView.this.cacheView();
             }
         }
         });
@@ -147,9 +144,6 @@ public class OpenAirMapView extends MapView {
                permission1 == PackageManager.PERMISSION_GRANTED;
     }
 
-    /*
-      onDestroy is final method so I can't override it.
-   */
     public synchronized void doDestroy() {
         if (destroyed) {
             return;
@@ -216,7 +210,7 @@ public class OpenAirMapView extends MapView {
 
     public void enableMapLoading(boolean loadingEnabled) {
         if (loadingEnabled && !this.isMapLoaded) {
-        this.getMapLoadingLayoutView().setVisibility(View.VISIBLE);
+            this.getMapLoadingLayoutView().setVisibility(View.VISIBLE);
         }
     }
 
@@ -373,6 +367,50 @@ public class OpenAirMapView extends MapView {
         if (this.mapLoadingLayout != null) {
         ((ViewGroup) this.mapLoadingLayout.getParent()).removeView(this.mapLoadingLayout);
         this.mapLoadingLayout = null;
+        }
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onFirstLayout(View v, int left, int top, int right, int bottom) {
+
+    }
+
+    private void cacheView() {
+        if (this.cacheEnabled) {
+            final ImageView cacheImageView = this.getCacheImageView();
+            final RelativeLayout mapLoadingLayout = this.getMapLoadingLayoutView();
+            cacheImageView.setVisibility(View.INVISIBLE);
+            mapLoadingLayout.setVisibility(View.VISIBLE);
+            if (this.isMapLoaded) {
+                Log.v("test", "log map");
+//                this.map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+                //       @Override public void onSnapshotReady(Bitmap bitmap) {
+                //         cacheImageView.setImageBitmap(bitmap);
+                //         cacheImageView.setVisibility(View.VISIBLE);
+                //         mapLoadingLayout.setVisibility(View.INVISIBLE);
+                //       }
+                //     });
+            }
+        } else {
+            this.removeCacheImageView();
+            if (this.isMapLoaded) {
+                this.removeMapLoadingLayoutView();
+            }
         }
     }
 }
