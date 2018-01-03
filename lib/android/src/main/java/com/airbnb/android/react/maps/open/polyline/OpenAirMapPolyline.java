@@ -6,6 +6,7 @@ import com.airbnb.android.react.maps.open.OpenAirMapFeature;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Polyline;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OpenAirMapPolyline extends OpenAirMapFeature {
-    private PolylineOptions polylineOptions;
     private Polyline polyline;
 
     private List<GeoPoint> coordinates;
@@ -25,6 +25,16 @@ public class OpenAirMapPolyline extends OpenAirMapFeature {
 
     public OpenAirMapPolyline(Context context) {
         super(context);
+    }
+
+    @Override
+    public void addToMap(OpenStreetMapTileProviderConstants map) {
+
+    }
+
+    @Override
+    public void removeFromMap(MapView map) {
+
     }
 
     public void setCoordinates(ReadableArray coordinates) {
@@ -58,23 +68,6 @@ public class OpenAirMapPolyline extends OpenAirMapFeature {
         if (polyline != null) {
             polyline.setGeodesic(geodesic);
         }
-    }
-
-    public PolylineOptions getPolylineOptions() {
-        if (polylineOptions == null) {
-            polylineOptions = createPolylineOptions();
-        }
-        return polylineOptions;
-    }
-
-    private PolylineOptions createPolylineOptions() {
-        PolylineOptions options = new PolylineOptions();
-        options.addAll(coordinates);
-        options.color(color);
-        options.width(width);
-        options.geodesic(geodesic);
-        options.zIndex(zIndex);
-        return options;
     }
 
     @Override
