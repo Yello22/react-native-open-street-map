@@ -1,9 +1,9 @@
 {
-  "name": "react-native-maps",
-  "description": "React Native Mapview component for iOS + Android",
+  "name": "react-native-open-street-map",
+  "description": "React Native Mapview component for Android",
   "main": "index.js",
-  "author": "Leland Richardson <leland.m.richardson@gmail.com>",
-  "version": "0.19.0",
+  "author": "Enieber Cunha <eniebercunha@gmail.com>",
+  "version": "0.0.1",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "run:packager": "./node_modules/react-native/packager/packager.sh",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/airbnb/react-native-maps"
+    "url": "https://github.com/enieber/react-native-open-street-map"
   },
   "keywords": [
     "react",
@@ -29,7 +29,7 @@
     "react-component",
     "map",
     "mapview",
-    "google-maps",
+    "open-street-map",
     "mapkit"
   ],
   "peerDependencies": {
