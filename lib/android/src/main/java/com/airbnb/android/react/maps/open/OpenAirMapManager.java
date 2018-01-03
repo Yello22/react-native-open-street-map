@@ -1,5 +1,6 @@
 package com.airbnb.android.react.maps.open;
 
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.react.bridge.Arguments;
@@ -15,9 +16,11 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
+import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 
 import java.util.Map;
 
@@ -48,15 +51,31 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @Override
     public String getName() {
+        Log.v("test", "getName");
         return REACT_CLASS;
     }
 
     @Override
     protected OpenAirMapView createViewInstance(ThemedReactContext context) {
-        return new OpenAirMapView(context, this.appContext, this);
+        OpenAirMapView view = new OpenAirMapView(context, this.appContext, this);
+        if (view.map != null) {
+            MapView mapView = view.map;
+            mapView.setTileSource(TileSourceFactory.MAPNIK);
+            mapView.setBuiltInZoomControls(true);
+            mapView.setMultiTouchControls(true);
+            IMapController controller = mapView.getController();
+            controller.setZoom(10);
+            GeoPoint startPoint = new GeoPoint(-30, 50);
+            controller.setCenter(startPoint);
+            return view;
+        }
+        Log.v("test", "view");
+        return view;
+
     }
 
     private void emitMapError(ThemedReactContext context, String message, String type) {
+        Log.v("test", "emitMapError");
         WritableMap error = Arguments.createMap();
         error.putString("message", message);
         error.putString("type", type);
@@ -68,6 +87,7 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "region")
     public void setRegion(OpenAirMapView view, ReadableMap region) {
+        Log.v("test", "setRegion");
         view.setRegion(region);
     }
 
@@ -78,19 +98,39 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "mapType")
     public void setMapType(OpenAirMapView view, @Nullable String mapType) {
+        Log.v("test", "setMapType");
         OnlineTileSourceBase titleMap = MAP_TYPES.get(mapType);
         view.setTileSource(titleMap);
     }
 
     @ReactProp(name = "zoom")
-    public void setZoom(OpenAirMapView view, int zoom) {
-        view.map.getController().setZoom(zoom);
+    public void zoom(OpenAirMapView view, int zoom) {
+        Log.v("test", "setZoom");
+        view.zoom(zoom);
     }
 
-    @ReactProp(name = "controllerZom", defaultBoolean = false)
+    @ReactProp(name = "zoomEnabled", defaultBoolean = true)
+    public void setZoomEnabled(OpenAirMapView view, boolean zoomEnabled) {
+        Log.v("test", "setZoomEnabled");
+        view.map.setEnabled(zoomEnabled);
+    }
+
+    @ReactProp(name = "controllerZom", defaultBoolean = true)
     public void controllerZom(OpenAirMapView view, boolean isZoomControl) {
+
+        Log.v("test", "controllerZom");
         view.map.setBuiltInZoomControls(isZoomControl);
     };
+
+    @ReactProp(name = "minZoomLevel")
+    public void setMinZoomLevel(OpenAirMapView view, Integer minZoomLevel) {
+        view.map.setMinZoomLevel(minZoomLevel);
+    }
+
+    @ReactProp(name = "maxZoomLevel")
+    public void setMaxZoomLevel(OpenAirMapView view, Integer maxZoomLevel) {
+        view.map.setMaxZoomLevel(maxZoomLevel);
+    }
 
     @ReactProp(name = "mapPadding")
     public void setMapPadding(OpenAirMapView view, ReadableMap padding) {
@@ -133,61 +173,19 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "toolbarEnabled", defaultBoolean = true)
     public void setToolbarEnabled(OpenAirMapView view, boolean toolbarEnabled) {
+        Log.v("test", "setToolbarEnabled");
         view.setFlingEnabled(toolbarEnabled);
     }
-
-    // This is a private prop to improve performance of panDrag by disabling it when the callback
-    // is not set
-    @ReactProp(name = "handlePanDrag", defaultBoolean = false)
-    public void setHandlePanDrag(OpenAirMapView view, boolean handlePanDrag) {
-        view.setHandlePanDrag(handlePanDrag);
-    }
-
-//    No ShowTraffic
-//    @ReactProp(name = "showsTraffic", defaultBoolean = false)
-//    public void setShowTraffic(OpenAirMapView view, boolean showTraffic) {
-//        view.map.setTrafficEnabled(showTraffic);
-//    }
-
-//
-//    @ReactProp(name = "showsBuildings", defaultBoolean = false)
-//    public void setShowBuildings(OpenAirMapView view, boolean showBuildings) {
-//        view.map.setBuildingsEnabled(showBuildings);
-//    }
-
-//    @ReactProp(name = "showsIndoors", defaultBoolean = false)
-//    public void setShowIndoors(OpenAirMapView view, boolean showIndoors) {
-//        view.map.setInd(showIndoors);
-//    }
-
-//    @ReactProp(name = "showsIndoorLevelPicker", defaultBoolean = false)
-//    public void setShowsIndoorLevelPicker(OpenAirMapView view, boolean showsIndoorLevelPicker) {
-//        view.map.getUiSettings().setIndoorLevelPickerEnabled(showsIndoorLevelPicker);
-//    }
-
-//    @ReactProp(name = "showsCompass", defaultBoolean = false)
-//    public void setShowsCompass(OpenAirMapView view, boolean showsCompass) {
-//        view.map.getUiSettings().setCompassEnabled(showsCompass);
-//    }
 
     @ReactProp(name = "scrollEnabled", defaultBoolean = false)
     public void setScrollEnabled(OpenAirMapView view, boolean scrollEnabled) {
         view.map.setScrollbarFadingEnabled(scrollEnabled);
     }
 
-   @ReactProp(name = "zoomEnabled", defaultBoolean = false)
-   public void setZoomEnabled(OpenAirMapView view, boolean zoomEnabled) {
-       view.map.setEnabled(zoomEnabled);
-   }
-
-//    @ReactProp(name = "zoomControlEnabled", defaultBoolean = true)
-//    public void setZoomControlEnabled(OpenAirMapView view, boolean zoomControlEnabled) {
-//        view.map.setZ(zoomControlEnabled);
-//    }
 
     @ReactProp(name = "rotateEnabled", defaultBoolean = false)
     public void setRotateEnabled(OpenAirMapView view, boolean rotateEnabled) {
-        view.map.setMultiTouchControls(rotateEnabled);
+        view.setMultiTouchControls(rotateEnabled);
     }
 
     @ReactProp(name = "cacheEnabled", defaultBoolean = false)
@@ -215,25 +213,8 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         view.setLoadingIndicatorColor(loadingIndicatorColor);
     }
 
-    //    @ReactProp(name = "pitchEnabled", defaultBoolean = false)
-//    public void setPitchEnabled(OpenAirMapView view, boolean pitchEnabled) {
-//        view.map.getUiSettings().setTiltGesturesEnabled(pitchEnabled);
-//    }
-
-    @ReactProp(name = "minZoomLevel")
-    public void setMinZoomLevel(OpenAirMapView view, Integer minZoomLevel) {
-        view.map.setMinZoomLevel(minZoomLevel);
-    }
-
-    @ReactProp(name = "maxZoomLevel")
-    public void setMaxZoomLevel(OpenAirMapView view, Integer maxZoomLevel) {
-        view.map.setMaxZoomLevel(maxZoomLevel);
-    }
-
     @Override
-    public void receiveCommand(OpenAirMapView view,
-                               int commandId,
-                               @Nullable ReadableArray args) {
+    public void receiveCommand(OpenAirMapView view, int commandId, @Nullable ReadableArray args) {
         Integer duration;
         Double lat;
         Double lng;
@@ -270,29 +251,6 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
             case ANIMATE_TO_VIEWING_ANGLE:
                 angle = (float)args.getDouble(0);
                 duration = args.getInt(1);
-//                view.animateToViewingAngle(angle, duration);
-                break;
-
-            case ANIMATE_TO_BEARING:
-                bearing = (float)args.getDouble(0);
-                duration = args.getInt(1);
-//                view.animateToBearing(bearing, duration);
-                break;
-
-            case FIT_TO_ELEMENTS:
-//                view.fitToElements(args.getBoolean(0));
-                break;
-
-            case FIT_TO_SUPPLIED_MARKERS:
-//                view.fitToSuppliedMarkers(args.getArray(0), args.getBoolean(1));
-                break;
-
-            case FIT_TO_COORDINATES:
-//                view.fitToCoordinates(args.getArray(0), args.getMap(1), args.getBoolean(2));
-                break;
-
-            case SET_MAP_BOUNDARIES:
-//                view.setMapBoundaries(args.getMap(0), args.getMap(1));
                 break;
         }
     }
@@ -342,8 +300,6 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @Override
     public LayoutShadowNode createShadowNodeInstance() {
-        // A custom shadow node is needed in order to pass back the width/height of the map to the
-        // view manager so that it can start applying camera moves with bounds.
         return new SizeReportingShadowNode();
     }
 

@@ -27,6 +27,7 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.events.EventDispatcher;
 
+import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
@@ -77,38 +78,13 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         context.getResources().getConfiguration() == null;
     }
 
-    // We do this to fix this bug:
-    // https://github.com/airbnb/react-native-maps/issues/271
-    //
-    // which conflicts with another bug regarding the passed in context:
-    // https://github.com/airbnb/react-native-maps/issues/1147
-    //
-    // Doing this allows us to avoid both bugs.
-//    private static Context getNonBuggyContext(ThemedReactContext reactContext, ReactApplicationContext appContext) {
-//        Context superContext = reactContext;
-//        if (!contextHasBug(appContext.getCurrentActivity())) {
-//            superContext = appContext.getCurrentActivity();
-//        } else if (contextHasBug(superContext)) {
-//        // we have the bug! let's try to find a better context to use
-//            if (!contextHasBug(reactContext.getCurrentActivity())) {
-//            superContext = reactContext.getCurrentActivity();
-//            } else if (!contextHasBug(reactContext.getApplicationContext())) {
-//            superContext = reactContext.getApplicationContext();
-//            } else {
-//            // ¯\_(ツ)_/¯
-//            }
-//        }
-//        return superContext;
-//    }
-
     public OpenAirMapView(ThemedReactContext reactContext,
                       ReactApplicationContext appContext,
                       OpenAirMapManager manager) {
         super(reactContext);
-
         this.manager = manager;
         this.context = reactContext;
-
+        this.map = this;
         final OpenAirMapView view = this;
 
         gestureDetector = new GestureDetectorCompat(reactContext, new GestureDetector.SimpleOnGestureListener() {
@@ -169,6 +145,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         }
     }
 
+
     public void setRegion(ReadableMap region) {
         if (region == null) return;
 
@@ -204,6 +181,15 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         }
     }
 
+    public void zoom(int zoom) {
+        if (map != null) {
+            IMapController controller = map.getController();
+            if (controller != null) {
+                controller.setZoom(zoom);
+            }
+        }
+    }
+
     public void setCacheEnabled(boolean cacheEnabled) {
         this.cacheEnabled = cacheEnabled;
     }
@@ -219,6 +205,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
     }
 
     public void setLoadingBackgroundColor(Integer loadingBackgroundColor) {
+        Log.v("test", "setLoadingIndicatorColor");
         this.loadingBackgroundColor = loadingBackgroundColor;
 
         if (this.mapLoadingLayout != null) {
@@ -231,6 +218,8 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
     }
 
     public void setLoadingIndicatorColor(Integer loadingIndicatorColor) {
+
+        Log.v("test", "setLoadingIndicatorColor");
         this.loadingIndicatorColor = loadingIndicatorColor;
         if (this.mapLoadingProgressBar != null) {
             Integer color = loadingIndicatorColor;
@@ -373,21 +362,28 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
     @Override
     public void onMarkerDrag(Marker marker) {
 
+        Log.v("test", "onMarkerDragEnd");
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-
+        Log.v("test", "onMarkerDragEnd");
     }
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-
+        Log.v("test", "onMarkerDragStart");
     }
 
     @Override
     public void onFirstLayout(View v, int left, int top, int right, int bottom) {
-
+        Log.v("test", "goo");
+        this.map.setBuiltInZoomControls(true);
+        this.map.setMultiTouchControls(true);
+        IMapController mapController = map.getController();
+        mapController.setZoom(50);
+        GeoPoint startPoint = new GeoPoint(-18.9855811, -53.7266065);
+        mapController.setCenter(startPoint);
     }
 
     private void cacheView() {
