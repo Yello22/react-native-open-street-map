@@ -4,7 +4,9 @@ This project is one fork of [react-native-maps](https://github.com/react-communi
 
 ## RoadMap
 
- - [ ] change use of GoogleMaps to OpenStreetMap
+ - [x] change use of GoogleMaps to OpenStreetMap
+ 
+ - [ ] add props OpenStreetMap
  
  - [ ] add option to show map with GoogleMap or OpenStreetMap
  
