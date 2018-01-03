@@ -63,11 +63,6 @@ public class OpenAirMapPolylineManager extends ViewGroupManager<OpenAirMapPolyli
         view.setGeodesic(geodesic);
     }
 
-    @ReactProp(name = "zIndex", defaultFloat = 1.0f)
-    public void setZIndex(OpenAirMapPolyline view, float zIndex) {
-        view.setZIndex(zIndex);
-    }
-
     @Override
     @Nullable
     public Map getExportedCustomDirectEventTypeConstants() {
