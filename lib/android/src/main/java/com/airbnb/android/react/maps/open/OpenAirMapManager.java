@@ -15,7 +15,6 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
-import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -80,25 +79,19 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     @ReactProp(name = "mapType")
     public void setMapType(OpenAirMapView view, @Nullable String mapType) {
         OnlineTileSourceBase titleMap = MAP_TYPES.get(mapType);
-        view.map.setTileSource(titleMap);
+        view.setTileSource(titleMap);
     }
 
     @ReactProp(name = "zoom")
-    public void setZoom(OpenAirMapView view, @Nullable int zoom) {
-        IMapController mapController = view.getController();
-        mapController.setZoom(zoom);
+    public void setZoom(OpenAirMapView view, int zoom) {
+        view.map.getController().setZoom(zoom);
     }
 
     @ReactProp(name = "controllerZom", defaultBoolean = false)
     public void controllerZom(OpenAirMapView view, boolean isZoomControl) {
-        view.setBuiltInZoomControls(isZoomControl);
+        view.map.setBuiltInZoomControls(isZoomControl);
     };
 
-    @ReactProp(name = "multiTouchControls", defaultBoolean = false)
-    public void setMultiTouchControls(OpenAirMapView view, boolean isMultiTouch) {
-        view.setMultiTouchControls(isMultiTouch);
-    }
-    
     @ReactProp(name = "mapPadding")
     public void setMapPadding(OpenAirMapView view, ReadableMap padding) {
         int left = 0;
@@ -182,10 +175,10 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         view.map.setScrollbarFadingEnabled(scrollEnabled);
     }
 
-//    @ReactProp(name = "zoomEnabled", defaultBoolean = false)
-//    public void setZoomEnabled(OpenAirMapView view, boolean zoomEnabled) {
-//        view.map.setEnabled(zoomEnabled);
-//    }
+   @ReactProp(name = "zoomEnabled", defaultBoolean = false)
+   public void setZoomEnabled(OpenAirMapView view, boolean zoomEnabled) {
+       view.map.setEnabled(zoomEnabled);
+   }
 
 //    @ReactProp(name = "zoomControlEnabled", defaultBoolean = true)
 //    public void setZoomControlEnabled(OpenAirMapView view, boolean zoomControlEnabled) {
