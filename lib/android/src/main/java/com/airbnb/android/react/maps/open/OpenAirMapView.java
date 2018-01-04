@@ -377,13 +377,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
 
     @Override
     public void onFirstLayout(View v, int left, int top, int right, int bottom) {
-        Log.v("test", "goo");
-        this.map.setBuiltInZoomControls(true);
-        this.map.setMultiTouchControls(true);
-        IMapController mapController = map.getController();
-        mapController.setZoom(50);
-        GeoPoint startPoint = new GeoPoint(-18.9855811, -53.7266065);
-        mapController.setCenter(startPoint);
+        
     }
 
     private void cacheView() {
