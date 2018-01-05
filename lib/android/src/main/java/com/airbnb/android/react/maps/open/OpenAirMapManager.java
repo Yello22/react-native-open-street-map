@@ -58,12 +58,9 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     protected OpenAirMapView createViewInstance(ThemedReactContext context) {
         OpenAirMapView view = new OpenAirMapView(context, this.appContext, this);
         if (view.map != null) {
-            MapView mapView = view.map;            
+            MapView mapView = view.map;
             mapView.setTileSource(TileSourceFactory.MAPNIK);
-            mapView.setBuiltInZoomControls(true);
-            mapView.setMultiTouchControls(true);
             IMapController controller = mapView.getController();
-            controller.setZoom(5);
             GeoPoint startPoint = new GeoPoint(-18.9855811, -53.7266065);
             controller.setCenter(startPoint);
             return view;
@@ -88,6 +85,16 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         view.setRegion(region);
     }
 
+    @ReactProp(name = "zoomControls", defaultBoolean = false)
+    public void showZoomControls(OpenAirMapView view, boolean isShowZoomControls) {
+        viw.showZoomControls(isShowZoomControls);
+    }
+
+    @ReactProp(name = "multiTouchControls", defaultBoolean = true)
+    public void showMultiTouchControls(OpenAirMapView view, boolean hasMultiTouchControls) {
+        viw.showMultiTouchControls(hasMultiTouchControls);
+    }
+    
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(OpenAirMapView view, ReadableMap initialRegion) {
         view.setInitialRegion(initialRegion);

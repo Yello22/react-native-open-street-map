@@ -85,7 +85,6 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         this.manager = manager;
         this.context = reactContext;
         this.map = this;
-        final OpenAirMapView view = this;
 
         gestureDetector = new GestureDetectorCompat(reactContext, new GestureDetector.SimpleOnGestureListener() {
         @Override
@@ -145,6 +144,13 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         }
     }
 
+    public void showZoomControls(boolean hasZoomcontrols) {
+        map.setBuiltInZoomControls(hasZoomcontrols);
+    }
+
+    public void showMultiTouchControls(boolean hasMultiTouchControls) {
+        map.setMultiTouchControls(hasMultiTouchControls);
+    }
 
     public void setRegion(ReadableMap region) {
         if (region == null) return;
@@ -296,6 +302,21 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         if (map == null) return;
     }
 
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        Log.v("test", "onMarkerDragEnd");
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+        Log.v("test", "onMarkerDragStart");
+    }
+
+    @Override
+    public void onFirstLayout(View v, int left, int top, int right, int bottom) {
+
+    }
+
     private ProgressBar getMapLoadingProgressBar() {
         if (this.mapLoadingProgressBar == null) {
         this.mapLoadingProgressBar = new ProgressBar(getContext());
@@ -363,21 +384,6 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
     public void onMarkerDrag(Marker marker) {
 
         Log.v("test", "onMarkerDragEnd");
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-        Log.v("test", "onMarkerDragEnd");
-    }
-
-    @Override
-    public void onMarkerDragStart(Marker marker) {
-        Log.v("test", "onMarkerDragStart");
-    }
-
-    @Override
-    public void onFirstLayout(View v, int left, int top, int right, int bottom) {
-        
     }
 
     private void cacheView() {
