@@ -87,12 +87,12 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "zoomControls", defaultBoolean = false)
     public void showZoomControls(OpenAirMapView view, boolean isShowZoomControls) {
-        viw.showZoomControls(isShowZoomControls);
+        view.showZoomControls(isShowZoomControls);
     }
 
     @ReactProp(name = "multiTouchControls", defaultBoolean = true)
     public void showMultiTouchControls(OpenAirMapView view, boolean hasMultiTouchControls) {
-        viw.showMultiTouchControls(hasMultiTouchControls);
+        view.showMultiTouchControls(hasMultiTouchControls);
     }
     
     @ReactProp(name = "initialRegion")
