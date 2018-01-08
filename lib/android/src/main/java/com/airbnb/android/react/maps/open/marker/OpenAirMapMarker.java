@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.airbnb.android.react.maps.open.OpenAirMapFeature;
 
-import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.views.MapView;
 
 class OpenAirMapMarker extends OpenAirMapFeature {
@@ -14,7 +13,7 @@ class OpenAirMapMarker extends OpenAirMapFeature {
     }
 
     @Override
-    public void addToMap(OpenStreetMapTileProviderConstants map) {
+    public void addToMap(MapView map) {
 
     }
 

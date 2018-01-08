@@ -94,7 +94,7 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     public void showMultiTouchControls(OpenAirMapView view, boolean hasMultiTouchControls) {
         view.showMultiTouchControls(hasMultiTouchControls);
     }
-    
+
     @ReactProp(name = "initialRegion")
     public void setInitialRegion(OpenAirMapView view, ReadableMap initialRegion) {
         view.setInitialRegion(initialRegion);
@@ -106,6 +106,36 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         view.setTileSource(titleMap);
     }
 
+    @ReactProp(name = "router")
+    public void router(OpenAirMapView view, ReadableMap router) {
+        if (router != null) {
+            String titlePointerA = "";
+            String descriptionA = "";
+            String titlePointerB = "";
+            String descriptionB = "";
+            if (router.hasKey("titleA")) {
+                titlePointerA = router.getString("titleA");
+            }
+
+            if (router.hasKey("descriptionA")) {
+                descriptionA = router.getString("descriptionA");
+            }
+
+            if (router.hasKey("titleB")) {
+                titlePointerB = router.getString("titleB");
+            }
+
+            if (router.hasKey("descriptionB")) {
+                descriptionB = router.getString("descriptionB");
+            }
+            if (router.hasKey("coordinates")) {
+                ReadableArray array = router.getArray("coordinates");
+                view.router(array, titlePointerA, descriptionA, titlePointerB, descriptionB);
+            }
+        }
+    }
+
+
     @ReactProp(name = "zoom")
     public void zoom(OpenAirMapView view, int zoom) {
         view.zoom(zoom);
@@ -113,14 +143,11 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
 
     @ReactProp(name = "zoomEnabled", defaultBoolean = true)
     public void setZoomEnabled(OpenAirMapView view, boolean zoomEnabled) {
-        Log.v("test", "setZoomEnabled");
         view.map.setEnabled(zoomEnabled);
     }
 
     @ReactProp(name = "controllerZom", defaultBoolean = true)
     public void controllerZom(OpenAirMapView view, boolean isZoomControl) {
-
-        Log.v("test", "controllerZom");
         view.map.setBuiltInZoomControls(isZoomControl);
     };
 

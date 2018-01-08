@@ -17,7 +17,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class OpenAirMapPolylineManager extends ViewGroupManager<OpenAirMapPolyline> {
+public class    OpenAirMapPolylineManager extends ViewGroupManager<OpenAirMapPolyline> {
     private final DisplayMetrics metrics;
 
     public OpenAirMapPolylineManager(ReactApplicationContext reactContext) {

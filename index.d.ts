@@ -27,6 +27,7 @@ declare module "react-native-maps" {
         showsBuildings?: boolean;
         showsTraffic?: boolean;
         showsIndoors?: boolean;
+        router: any;
         showsIndoorLevelPicker?: boolean;
         mapType?: 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'mutedStandard';
         region?: { latitude: number; longitude: number; latitudeDelta: number; longitudeDelta: number; };

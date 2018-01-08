@@ -6,7 +6,6 @@ import com.airbnb.android.react.maps.open.OpenAirMapFeature;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 
-import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Polyline;
@@ -16,8 +15,8 @@ import java.util.List;
 
 public class OpenAirMapPolyline extends OpenAirMapFeature {
     private Polyline polyline;
-
-    private List<GeoPoint> coordinates;
+    private MapView map;
+    private List<GeoPoint> coordinates = new ArrayList<>();
     private int color;
     private float width;
     private boolean geodesic;
@@ -28,8 +27,8 @@ public class OpenAirMapPolyline extends OpenAirMapFeature {
     }
 
     @Override
-    public void addToMap(OpenStreetMapTileProviderConstants map) {
-
+    public void addToMap(MapView map) {
+        this.map = map;
     }
 
     @Override
