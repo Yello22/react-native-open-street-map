@@ -209,7 +209,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         Polyline line = new Polyline(this.getContext());
         line.setSubDescription(Polyline.class.getCanonicalName());
         line.setWidth(5);
-        line.setColor(this.getResources().getColor(R.color.common_google_signin_btn_text_dark));
+        line.setColor(this.getResources().getColor(R.color.line_router_color));
         line.setPoints(pts);
         line.setGeodesic(true);
         line.setInfoWindow(new BasicInfoWindow(R.layout.bonuspack_bubble, this.map));
