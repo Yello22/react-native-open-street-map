@@ -22,6 +22,7 @@ region | Geolocation | - | OK | the initial region render map
 
 ### router
 
+```js
 router: {
   titleA: "The point A"
   titleB: "The point B",
@@ -38,3 +39,4 @@ router: {
    }
  ],
 }
+```
