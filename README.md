@@ -15,9 +15,8 @@ This project is one fork of [react-native-maps](https://github.com/react-communi
 
 ## Props
 
-
-name | type | iOS  | Android | Info | type
------- | ---- | ------- | ----
+name | type | iOS  | Android | Info
+------ | ---- | ------- | ---- | ----
 router | Object | - | OK | router the point A to point B (Android only)
 region | Geolocation | - | OK | the initial region render map
 
