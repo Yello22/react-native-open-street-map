@@ -48,7 +48,7 @@ region | Geolocation | - | OK | the initial region render map
 
 ```js
 router: {
-  titleA: "The point A"
+  titleA: "The point A",
   titleB: "The point B",
   descriptionA: "Bank",
   descriptionB: "Scholl",
