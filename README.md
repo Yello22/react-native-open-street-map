@@ -9,6 +9,8 @@ This project is one fork of [react-native-maps](https://github.com/react-communi
  - [x] render map in open-street-maps in android
  
  - [ ] add props OpenStreetMap
+  
+ - [ ] render open-street-maps to iOS
  
  - [ ] add option to show map with GoogleMap or OpenStreetMap
  
