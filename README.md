@@ -86,23 +86,39 @@ name | type | iOS  | Android | Info
 router | Object | - | OK | router the point A to point B (Android only)
 region | Geolocation | - | OK | the initial region render map
 
-### router
+## Exaple
+
+### How to make router from point A to point B
 
 ```js
-router: {
-  titleA: "The point A",
-  titleB: "The point B",
-  descriptionA: "Bank",
-  descriptionB: "Scholl",
-  coordinates: [
-   {
-     latitude: -15.806553,
-     longitude: -47.8891454,
-   },
-   {
-     latitude: -15.8202434,
-     longitude: -47.9045093,
-   }
- ],
-}
+
+import MapView from 'react-native-open-street-map';
+
+render() {
+  <MapView
+   ref="map"
+   zoom={5}
+   multiTouchControls
+   style={{
+     flex: 1,
+   }}
+   region={this.state.region}
+   showsUserLocation
+   router: {
+    titleA: "The point A",
+    titleB: "The point B",
+    descriptionA: "Bank",
+    descriptionB: "Scholl",
+    coordinates: [
+     {
+       latitude: -15.806553,
+       longitude: -47.8891454,
+     },
+     {
+       latitude: -15.8202434,
+       longitude: -47.9045093,
+     }
+   ],
+  }
+ />
 ```
