@@ -19,14 +19,12 @@ This project is one fork of [react-native-maps](https://github.com/react-communi
 
 this project is done to render maps in open-street-maps on android
 
-* install
+## install
 
-
+`package.json`
 ```json
   "react-native-open-street-maps": "https://github.com/enieber/react-native-open-street-map.git"
 ```
-
-* run
 
 ```
 npm install 
@@ -36,6 +34,48 @@ or
 yarn
 ```
 
+### Android
+
+`setting.gradle`
+
+```gradle
+// Open Street Map
+include ':react-native-open-street-map'
+project(':react-native-open-street-map').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-open-street-map/lib/android')
+```
+
+`app/build.gradle`
+
+```gradle
+
+dependencies {
+ ...
+    compile (project(':react-native-open-street-map')) {
+        // if you use the lib gms in the project or libs on project
+        exclude group: 'com.google.android.gms'
+    }
+```
+
+`app/src/main/java/{project_name}/MainApplication.java`
+```java
+
+...
+import com.airbnb.android.react.maps.MapsPackage;
+
+public class MainApplication extends Application implements ReactApplication {
+
+    @Override
+    protected List<ReactPackage> getPackages() {
+      new MainReactPackage(),
+      new MapsPackage() // insert this line to init module maps
+    }
+}    
+```
+
+
+### iOS 
+
+the iOS instalation is equals in the lib of react-native-maps because this fork not set iOS to use Open Street Maps, only Apple Maps.
 
 ## Props
 
