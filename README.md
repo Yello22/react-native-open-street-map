@@ -90,12 +90,16 @@ region | Geolocation | - | OK | the initial region render map
 
 ### How to make router from point A to point B
 
-```js
+```jsx
 
 import MapView from 'react-native-open-street-map';
 
 
 render() {
+
+  const latitudes = [-15.806553, -15.8202434];
+  const longitudes = [-47.8891454, -47.9045093];
+  
   return (
     <MapView
       ref="map"
@@ -113,12 +117,12 @@ render() {
         descriptionB: "Scholl",
         coordinates: [
           {
-            latitude: -15.806553,
-            longitude: -47.8891454
+            latitude: latitudes[0],
+            longitude: longitudes[1],
           },
           {
-            latitude: -15.8202434,
-            longitude: -47.9045093
+            latitude: latitudes[1],
+            longitude: longitudes[1],
           }
         ]
       }}
