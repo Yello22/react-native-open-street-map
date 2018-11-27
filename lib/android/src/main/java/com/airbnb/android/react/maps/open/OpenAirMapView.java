@@ -206,13 +206,13 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         } else {
             ReadableMap coordinate = array.getMap(0);
             GeoPoint poit = new GeoPoint(coordinate.getDouble("latitude"), coordinate.getDouble("longitude"));
-            coordinates.add(0, poit);
-            loadingSingleMap(coordinates, titlePointerA, descritptionA);
+            coordinates.add(0, poit);            
             IMapController mapController = this.map.getController();
             if (mapController != null) {
                 mapController.setZoom(15);
                 mapController.setCenter(poit);
             }
+            loadingSingleMap(coordinates, titlePointerA, descritptionA);
         }
     }
 
