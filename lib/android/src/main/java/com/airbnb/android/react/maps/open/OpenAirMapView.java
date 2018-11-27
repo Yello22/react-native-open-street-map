@@ -196,13 +196,50 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
 
     public void router(ReadableArray array, String titlePointerA, String descritptionA, String titlePointerB, String descritptionB) {
         List<GeoPoint> coordinates = new ArrayList<>();
-        for (int i = 0; i < array.size(); i++) {
-            ReadableMap coordinate = array.getMap(i);
+        if (array.size() > 1) {
+            for (int i = 0; i < array.size(); i++) {
+                ReadableMap coordinate = array.getMap(i);
+                GeoPoint poit = new GeoPoint(coordinate.getDouble("latitude"), coordinate.getDouble("longitude"));
+                coordinates.add(i, poit);
+            }
+            loadingMap(coordinates, titlePointerA, descritptionA, titlePointerB, descritptionB);
+        } else {
+            ReadableMap coordinate = array.getMap(0);
             GeoPoint poit = new GeoPoint(coordinate.getDouble("latitude"), coordinate.getDouble("longitude"));
-            coordinates.add(i, poit);
+            coordinates.add(0, poit);
+            loadingSingleMap(coordinates, titlePointerA, descritptionA);
+            IMapController mapController = this.map.getController();
+            if (mapController != null) {
+                mapController.setZoom(15);
+                mapController.setCenter(poit);
+            }
         }
+    }
 
-        loadingMap(coordinates, titlePointerA, descritptionA, titlePointerB, descritptionB);
+    private void loadingSingleMap(List<GeoPoint> pts, String titlePointer, String descritption) {
+        Double latitude = pts.get(0).getLatitude();
+        Double longitude = pts.get(0).getLongitude();
+        GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+        OverlayItem myLocation = new OverlayItem(titlePointer, descritption, geoPoint);
+        Drawable newMarker = this.getResources().getDrawable(R.drawable.marker_default);
+        myLocation.setMarker(newMarker);
+
+        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(myLocation);
+
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(this.getContext(), items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                //do something
+                return true;
+            }
+            @Override
+            public boolean onItemLongPress(final int index, final OverlayItem item) {
+                return false;
+            }
+        });
+        mOverlay.setFocusItemsOnTap(true);
+        this.map.getOverlays().add(mOverlay);
     }
 
     private void loadingMap(List<GeoPoint> pts, String titlePointerA, String descritptionA, String titlePointerB,  String descritptionB) {
@@ -241,7 +278,6 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
         this.map.getOverlays().add(mOverlay);
         this.map.getOverlayManager().add(line);
     }
-
 
     public void zoom(int zoom) {
         if (map != null) {
