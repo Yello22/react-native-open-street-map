@@ -30,7 +30,7 @@ this project is done to render maps in open-street-maps on android
 
 `package.json`
 ```json
-  "react-native-open-street-maps": "https://github.com/enieber/react-native-open-street-map.git"
+  "react-native-open-street-map": "https://github.com/enieber/react-native-open-street-map.git"
 ```
 
 ```
