@@ -23,7 +23,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.util.Map;
-
 import javax.annotation.Nullable;
 
 public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {

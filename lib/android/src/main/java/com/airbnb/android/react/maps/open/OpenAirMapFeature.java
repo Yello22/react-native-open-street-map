@@ -1,9 +1,6 @@
 package com.airbnb.android.react.maps.open;
-
 import android.content.Context;
-
 import com.facebook.react.views.view.ReactViewGroup;
-
 import org.osmdroid.views.MapView;
 
 public abstract class OpenAirMapFeature extends ReactViewGroup {

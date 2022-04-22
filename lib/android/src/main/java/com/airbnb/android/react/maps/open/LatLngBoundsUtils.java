@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 public class LatLngBoundsUtils {
+  
   public static boolean BoundsAreDifferent(LatLngBounds a, LatLngBounds b) {
     LatLng centerA = a.getCenter();
     double latA = centerA.latitude;
