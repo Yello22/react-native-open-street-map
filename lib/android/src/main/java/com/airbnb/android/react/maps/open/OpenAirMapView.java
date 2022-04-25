@@ -8,7 +8,7 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.view.GestureDetectorCompat;
+import androidx.core.view.GestureDetectorCompat;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListener, MapView.OnFirstLayoutListener {
     public MapView map;
@@ -250,7 +250,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
     }
 
     private void loadingMap(List<GeoPoint> pts, String titlePointerA, String descritptionA, String titlePointerB,  String descritptionB) {
-        Polyline line = new Polyline(this.getContext());
+        Polyline line = new Polyline();
         line.setSubDescription(Polyline.class.getCanonicalName());
         line.setWidth(5);
         line.setColor(this.getResources().getColor(R.color.line_router_color));
@@ -372,7 +372,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
 //        }
         feature.removeFromMap(map);
     }
-
+/*
     public WritableMap makeClickEventData(GeoPoint point) {
         WritableMap event = new WritableNativeMap();
 
@@ -391,7 +391,7 @@ public class OpenAirMapView extends MapView implements Marker.OnMarkerDragListen
 
         return event;
     }
-
+*/
     public void animateToRegion(GeoPoint bounds, int duration) {
         if (map == null) return;
         map.getController().animateTo(bounds);

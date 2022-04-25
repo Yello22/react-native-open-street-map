@@ -17,9 +17,7 @@ This project is one fork of [react-native-maps](https://github.com/react-communi
   
  - [ ] render open-street-maps to iOS
  
- - [ ] add option to show map with GoogleMap or OpenStreetMap
  
- - [ ] to do PullRequest to [orginal repository](https://github.com/react-community/react-native-maps)
 
 
 ## How to use
@@ -189,7 +187,7 @@ class CustonMap extends React.PureComponent {
         }}
         region={region}
         showsUserLocation
-        router={
+        router={{
           titleA: 'New Yourk city',
           descriptionA: 'My location',
           coordinates: [{

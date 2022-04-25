@@ -36,9 +36,8 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     private static final int FIT_TO_SUPPLIED_MARKERS = 6;
     private static final int FIT_TO_COORDINATES = 7;
     private static final int SET_MAP_BOUNDARIES = 8;
-    private double lat = -18.9855811
-    private double log = -53.7266065
- 
+    private MapView mapView;
+
     private final Map<String, OnlineTileSourceBase> MAP_TYPES = MapBuilder.of(
             "standard", TileSourceFactory.MAPNIK,
             "satellite", TileSourceFactory.OPEN_SEAMAP
@@ -59,10 +58,10 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     protected OpenAirMapView createViewInstance(ThemedReactContext context) {
         OpenAirMapView view = new OpenAirMapView(context, this.appContext, this);
         if (view.map != null) {
-            MapView mapView = view.map;
+            mapView = view.map;
             mapView.setTileSource(TileSourceFactory.MAPNIK);
             IMapController controller = mapView.getController();
-            GeoPoint startPoint = new GeoPoint(this.lat, this.log);
+            GeoPoint startPoint = new GeoPoint(-18.9855811, -53.7266065);
             controller.setCenter(startPoint);
             return view;
         }
@@ -94,16 +93,6 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     @ReactProp(name = "multiTouchControls", defaultBoolean = true)
     public void showMultiTouchControls(OpenAirMapView view, boolean hasMultiTouchControls) {
         view.showMultiTouchControls(hasMultiTouchControls);
-    }
-
-    @ReactProp(name = "initalLat")
-    public void setIntialLat(double lat) {
-      this.lat = lat;
-    }
-  
-    @ReactProp(name = "initalLog")
-    public void setIntialLat(double log) {
-      this.log = log;
     }
 
     @ReactProp(name = "initialRegion")
@@ -161,17 +150,17 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
     public void controllerZom(OpenAirMapView view, boolean isZoomControl) {
         view.map.setBuiltInZoomControls(isZoomControl);
     };
-
+/*
     @ReactProp(name = "minZoomLevel")
-    public void setMinZoomLevel(OpenAirMapView view, Integer minZoomLevel) {
+    public void setMinZoomLevel(OpenAirMapView view, Double minZoomLevel) {
         view.map.setMinZoomLevel(minZoomLevel);
     }
 
     @ReactProp(name = "maxZoomLevel")
-    public void setMaxZoomLevel(OpenAirMapView view, Integer maxZoomLevel) {
+    public void setMaxZoomLevel(OpenAirMapView view, Double maxZoomLevel) {
         view.map.setMaxZoomLevel(maxZoomLevel);
     }
-
+*/
     @ReactProp(name = "mapPadding")
     public void setMapPadding(OpenAirMapView view, ReadableMap padding) {
         int left = 0;
