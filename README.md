@@ -2,6 +2,8 @@
 
 This project is one fork of [react-native-maps](https://github.com/react-community/react-native-maps) to use open-street-map
 
+[![npm version](https://img.shields.io/npm/v/react-native-open-street-map.svg?style=flat)](https://www.npmjs.com/package/react-native-open-street-map)
+
 ## RoadMap
 
  - [x] change use of GoogleMaps to OpenStreetMap
@@ -26,17 +28,13 @@ this project is done to render maps in open-street-maps on android
 
 ## install
 
-`package.json`
-```json
-  "react-native-open-street-map": "https://github.com/enieber/react-native-open-street-map.git"
-```
 
 ```
-npm install 
+npm i react-native-open-street-map
 ```
 or
 ```
-yarn
+yarn add react-native-open-street-map
 ```
 
 ### Android
