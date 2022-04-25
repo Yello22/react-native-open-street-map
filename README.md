@@ -1,4 +1,4 @@
-# react-native-maps (using open-street-map) WIP
+# Open Street Maps to react-native
 
 This project is one fork of [react-native-maps](https://github.com/react-community/react-native-maps) to use open-street-map
 
