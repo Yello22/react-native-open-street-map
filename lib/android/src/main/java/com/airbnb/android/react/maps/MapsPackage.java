@@ -28,12 +28,6 @@ public class MapsPackage implements ReactPackage {
   public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
     return Arrays.<NativeModule>asList(new OpenAirMapModule(reactContext));
   }
-
-  // Deprecated RN 0.47
-  public List<Class<? extends JavaScriptModule>> createJSModules() {
-    return Collections.emptyList();
-  }
-
   @Override
   public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
     OpenAirMapCalloutManager calloutManager = new OpenAirMapCalloutManager();
