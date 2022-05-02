@@ -16,6 +16,10 @@ import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.*;
+
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -59,7 +63,11 @@ public class OpenAirMapManager extends ViewGroupManager<OpenAirMapView> {
         OpenAirMapView view = new OpenAirMapView(context, this.appContext, this);
         if (view.map != null) {
             mapView = view.map;
-            mapView.setTileSource(TileSourceFactory.MAPNIK);
+            mapView.setTileSource(new XYTileSource("Open Street", 0, 18, 256, ".png", new String[] {
+              "https://a.tile.openstreetmap.fr/hot/",
+              "https://b.tile.openstreetmap.fr/hot/",
+              "https://tile.openstreetmap.org/",
+            }));
             IMapController controller = mapView.getController();
             GeoPoint startPoint = new GeoPoint(-18.9855811, -53.7266065);
             controller.setCenter(startPoint);
